@@ -4,7 +4,16 @@ const fini = document.querySelectorAll('.remove')
 const change = document.querySelectorAll('.change')
 const toDo = document.querySelector('#toDo')
 const sections = document.querySelectorAll('section');
+const body = document.querySelector('body');
+const taches = document.querySelectorAll('.task')
 let nombreTask = 0
+
+body.addEventListener('drop', otherDrop);
+
+taches.forEach( tache =>{
+  tache.addEventListener('drop', otherDrop);
+})
+
 
 
 sections.forEach( section =>{                                       //drag/drop coté reception
@@ -32,6 +41,13 @@ function drop(e){
     e.target.appendChild(draggable);
     draggable.classList.remove('hide');
 }
+function otherDrop(e){
+  console.log('test');
+  const id = e.dataTransfer.getData('text/plain');
+  const draggable = document.getElementById(id);
+  draggable.parentElement.appendChild(draggable);
+  draggable.classList.remove('hide');
+}
 
 
 addThing.addEventListener('click', function (e) {           //creation d'une tâche
@@ -49,6 +65,9 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     newP.classList.add('newP')
     newTask.appendChild(newP)
     newP.textContent = toDo.value
+    let newDivForm = document.createElement('div');
+    newDivForm.classList.add('newDivForm');
+    newTask.appendChild(newDivForm);
     let newDivDiv = document.createElement('div')
     newDivDiv.classList.add('divDiv');
     newTask.appendChild(newDivDiv)
@@ -62,9 +81,11 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     newBtnModify.textContent = 'M'
     newDivBtn.appendChild(newBtnModify)
     newBtnModify.addEventListener('click', function () {        //création de la fonction de modification
+      newDivForm.innerHTML = '';
+      newDivForm.classList.remove('newDivForm')
       let newForm = document.createElement('form')
       newForm.classList.add('newForm')
-      newTask.appendChild(newForm)
+      newDivForm.appendChild(newForm)
       let newInput = document.createElement('input')
       newInput.id = 'newInput' + nombreTask
       newForm.appendChild(newInput)
@@ -108,4 +129,3 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     })
   }
 })
-

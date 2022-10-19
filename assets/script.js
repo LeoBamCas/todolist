@@ -49,8 +49,13 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     newP.classList.add('newP')
     newTask.appendChild(newP)
     newP.textContent = toDo.value
+    let newDivDiv = document.createElement('div')
+    newDivDiv.classList.add('divDiv');
+    newTask.appendChild(newDivDiv)
     let newDivBtn = document.createElement('div')
-    newTask.appendChild(newDivBtn)
+    newDivDiv.appendChild(newDivBtn)
+    let newDivBtn2 = document.createElement('div')
+    newDivDiv.appendChild(newDivBtn2)
     let newBtnModify = document.createElement('button')
     newBtnModify.id = 'modify' + nombreTask
     newBtnModify.classList.add('modify')
@@ -78,7 +83,21 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     newBtnRmv.textContent = 'X'
     newDivBtn.appendChild(newBtnRmv)
     newBtnRmv.addEventListener('click', function (e) {
-      newBtnRmv.parentElement.parentElement.remove()
+      newBtnRmv.parentElement.parentElement.parentElement.remove()
+    })
+    let newBtnImp = document.createElement('button');
+    newBtnImp.id = 'important' + nombreTask;
+    newBtnImp.textContent = 'I';
+    newBtnImp.classList.add('important');
+    newDivBtn2.appendChild(newBtnImp);
+    newDivBtn2.addEventListener('click', function(e){           //changement de couleur
+            e.preventDefault();
+            if (newDivBtn2.parentElement.parentElement.classList.contains('important')){
+                newDivBtn2.parentElement.parentElement.classList.remove('important');
+            }else{
+
+                newDivBtn2.parentElement.parentElement.classList.add('important');
+            }
     })
     newTask.addEventListener('dragstart', function(e){          //fonctiondrag/drop coté task
         e.dataTransfer.setData('text/plain',e.target.id);

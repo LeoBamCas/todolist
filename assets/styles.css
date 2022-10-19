@@ -1,4 +1,9 @@
+@font-face {
+    font-family: 'Owl';
+    src: url('../public/font/owl_cute/Owl\ Cute.ttf');
+}
 body{
+    font-family: 'Owl';
     padding: 0%;
     margin: 0%;
     background-image: url("../public/img/liege.jpg");
@@ -23,10 +28,12 @@ footer{
 h1{
     margin: 0%;
     text-align: center;
+    font-size: 5vh;
 
 }
 h3{
     text-align: center;
+    font-size: 3vh;
 }
 section{
     width: 30vw;
@@ -72,6 +79,7 @@ section{
     padding: 2vh;
     border-radius: 0% 15% 0% 23%;
     cursor: grab;
+    font-size: 2vh;
 }
 
 .task button, .task div button{
@@ -84,6 +92,14 @@ section{
 .drag-over{
     border: double red;
 }
+.divDiv{
+    display: flex;
+    flex-direction: column;
+}
+.important{
+    background-color: red !important;
+    color: white;
+}
 
 @media screen and (max-width : 900px) {
 
@@ -91,10 +107,14 @@ section{
         display: flex;
         flex-direction: column;
         height: fit-content;
+        padding: 1vh;
     }
     .aFaire form input{
         width:70%;
         margin: 0%;
+    }
+    .newForm input{
+        width: 60%;
     }
 }
 

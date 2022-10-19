@@ -78,6 +78,24 @@ section{
     background-color: palegoldenrod;
     border: solid white;
 }
-.newP{
-    
+.hide{
+    visibility: hidden;
 }
+.drag-over{
+    border: double red;
+}
+
+@media screen and (max-width : 900px) {
+
+    .task{
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+    }
+    .aFaire form input{
+        width:70%;
+        margin: 0%;
+    }
+}
+
+

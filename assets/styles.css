@@ -85,6 +85,17 @@ section{
     animation-name: 'apparition';
     animation-duration: 1s;
 }
+.aValider{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.aValider p{
+    height: fit-content;
+    padding: 1vh;
+    margin-right: 1vh;
+    border-radius: 20%;
+}
 
 @keyframes apparition{
     0%{
@@ -92,6 +103,18 @@ section{
     }
     100%{
         opacity: 100%;
+    }
+}
+.translate{
+    animation-name: 'sortie';
+    animation-duration: 800ms;
+}
+@keyframes sortie{
+    0%{
+        transform:translateX(0);
+    }
+    100%{
+        transform:translateX(-100px);
     }
 }
 

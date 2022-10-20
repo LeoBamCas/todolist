@@ -6,7 +6,8 @@ const change = document.querySelectorAll('.change')
 const toDo = document.querySelector('#toDo')
 const sections = document.querySelectorAll('section');
 const milieu = document.querySelector('.milieu');
-const taches = document.querySelectorAll('.task')
+const taches = document.querySelectorAll('.task');
+const clear = document.querySelector('#clear');
 let nombreTask = 0
 
                                                                      //drag drop fix ?
@@ -111,19 +112,22 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     newBtnRmv.textContent = 'X'
     newDivBtn.appendChild(newBtnRmv)
     newBtnRmv.addEventListener('click', function (e) {
-      // function animationSortie(){
-      //   let keyframes = {
-      //     margin-right: [0% 0% 0% 0%, 0% 60% 0% 0%],
-      //     opacity: [1, 0]
-      // }
-      //   let options = {
-      //     duration: 1000,
+      function animationSortie(){
+        let keyframes = {
+          opacity: [1, 0]
+      }
+        let options = {
+          duration: 800,
 
-      //   }
-      //   newTask.animate(keyframes,options);
-      // }
-      // animationSortie();
-      newBtnRmv.parentElement.parentElement.parentElement.remove()
+        }
+        newTask.animate(keyframes,options);
+      }
+      animationSortie();
+      newTask.classList.add('translate');
+      setTimeout( ()=>{
+
+        newBtnRmv.parentElement.parentElement.parentElement.remove()
+      }, 800);
     })
     let newBtnImp = document.createElement('button');
     newBtnImp.id = 'important' + nombreTask;
@@ -151,4 +155,13 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     })
   }
   toDo.value ="";
+})
+
+
+                                                              //bouton clear all
+clear.addEventListener('click',function(e){
+    const taches = document.querySelectorAll('#aValider .task');
+    for(let task of taches){
+      task.remove();
+    }
 })

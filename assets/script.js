@@ -1,4 +1,3 @@
-'use strict'
 const addThing = document.querySelector('#addThing') //variables
 const premierTableau = document.querySelector('#premierTableau')
 const fini = document.querySelectorAll('.remove')
@@ -29,8 +28,10 @@ function supprimer (aSupprimer) {
   }, 800)
 }
 
-sections.forEach(section => {
   //drag/drop coté reception
+
+sections.forEach(section => {
+
   section.addEventListener('dragenter', dragEnter)
   section.addEventListener('dragover', dragOver)
   section.addEventListener('dragleave', dragLeave)
@@ -56,7 +57,9 @@ function drop (e) {
   draggable.classList.remove('hide')
 }
 
-addThing.addEventListener('click', function (e) {//creation d'une tâche
+//creation d'une tâche
+
+addThing.addEventListener('click', function (e) {
   e.preventDefault()
   if (toDo.value.length < 1) {
     alert('Veuillez entrer une valeur')
@@ -86,7 +89,10 @@ addThing.addEventListener('click', function (e) {//creation d'une tâche
     newBtnModify.classList.add('modify')
     newBtnModify.textContent = 'M'
     newDivBtn.appendChild(newBtnModify)
-    newBtnModify.addEventListener('click', function () {   //création de la fonction de modification
+
+     //création de la fonction de modification
+
+    newBtnModify.addEventListener('click', function () {  
       newDivForm.innerHTML = ''
       newDivForm.classList.remove('newDivForm')
       let newForm = document.createElement('form')
@@ -104,7 +110,10 @@ addThing.addEventListener('click', function (e) {//creation d'une tâche
         newForm.remove()
       })
     })
-    let newBtnRmv = document.createElement('button') //création du bouton supprimer
+
+     //création du bouton supprimer
+
+    let newBtnRmv = document.createElement('button')
     newBtnRmv.id = 'remove' + nombreTask
     newBtnRmv.classList.add('remove')
     newBtnRmv.textContent = 'X'
@@ -117,7 +126,10 @@ addThing.addEventListener('click', function (e) {//creation d'une tâche
     newBtnImp.textContent = 'I'
     newBtnImp.classList.add('important')
     newDivBtn2.appendChild(newBtnImp)
-    newDivBtn2.addEventListener('click', function (e) {      //changement de couleur
+
+      //changement de couleur
+
+    newDivBtn2.addEventListener('click', function (e) {    
       e.preventDefault()
       if (
         newDivBtn2.parentElement.parentElement.classList.contains('important')
@@ -127,7 +139,10 @@ addThing.addEventListener('click', function (e) {//creation d'une tâche
         newDivBtn2.parentElement.parentElement.classList.add('important')
       }
     })
-    newTask.addEventListener('dragstart', function (e) { //fonctiondrag/drop coté task
+
+     //fonctiondrag/drop coté task
+     
+    newTask.addEventListener('dragstart', function (e) {
       e.dataTransfer.setData('text/plain', e.target.id)
       setTimeout(() => {
         e.target.classList.add('hide')

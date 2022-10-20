@@ -162,5 +162,14 @@ section{
     }
     .newForm input{
         width: 60%;
+    }.aValider{
+        display:flex;
+        flex-direction: column;
+    }
+    #clear{
+        margin: 0%;
+    }
+    #toDo{
+        width: 65%;
     }
 }

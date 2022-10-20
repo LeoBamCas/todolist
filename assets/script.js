@@ -1,20 +1,34 @@
+"use strict";
 const addThing = document.querySelector('#addThing')                //variables
 const premierTableau = document.querySelector('#premierTableau')
 const fini = document.querySelectorAll('.remove')
 const change = document.querySelectorAll('.change')
 const toDo = document.querySelector('#toDo')
 const sections = document.querySelectorAll('section');
-const body = document.querySelector('body');
+const milieu = document.querySelector('.milieu');
 const taches = document.querySelectorAll('.task')
 let nombreTask = 0
 
-body.addEventListener('drop', otherDrop);
+                                                                     //drag drop fix ?
 
 taches.forEach( tache =>{
+  tache.addEventListener('dragover', otherDragover);
   tache.addEventListener('drop', otherDrop);
 })
 
+function otherDragover(e){
+  console.log('otherDragover')
+};
 
+
+
+function otherDrop(e){
+  console.log('test');
+  const id = e.dataTransfer.getData('text/plain');
+  const draggable = document.getElementById(id);
+  draggable.parentElement.appendChild(draggable);
+  draggable.classList.remove('hide');
+}
 
 sections.forEach( section =>{                                       //drag/drop coté reception
     section.addEventListener('dragenter', dragEnter);
@@ -40,13 +54,6 @@ function drop(e){
     const draggable = document.getElementById(id);
     e.target.appendChild(draggable);
     draggable.classList.remove('hide');
-}
-function otherDrop(e){
-  console.log('test');
-  const id = e.dataTransfer.getData('text/plain');
-  const draggable = document.getElementById(id);
-  draggable.parentElement.appendChild(draggable);
-  draggable.classList.remove('hide');
 }
 
 
@@ -104,6 +111,18 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     newBtnRmv.textContent = 'X'
     newDivBtn.appendChild(newBtnRmv)
     newBtnRmv.addEventListener('click', function (e) {
+      // function animationSortie(){
+      //   let keyframes = {
+      //     margin-right: [0% 0% 0% 0%, 0% 60% 0% 0%],
+      //     opacity: [1, 0]
+      // }
+      //   let options = {
+      //     duration: 1000,
+
+      //   }
+      //   newTask.animate(keyframes,options);
+      // }
+      // animationSortie();
       newBtnRmv.parentElement.parentElement.parentElement.remove()
     })
     let newBtnImp = document.createElement('button');
@@ -127,5 +146,9 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
 
         }, 0);
     })
+    newTask.addEventListener('dragend',function(e){
+      e.target.classList.remove('hide');
+    })
   }
+  toDo.value ="";
 })

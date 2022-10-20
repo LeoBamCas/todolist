@@ -97,6 +97,14 @@ section{
     border-radius: 20%;
 }
 
+.bouton{
+    cursor: pointer;
+}
+.hover{
+    background-color: white;
+    color: red;
+}
+
 @keyframes apparition{
     0%{
         opacity: 0%;

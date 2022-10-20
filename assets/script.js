@@ -1,64 +1,62 @@
-"use strict";
-const addThing = document.querySelector('#addThing')                //variables
+'use strict'
+const addThing = document.querySelector('#addThing') //variables
 const premierTableau = document.querySelector('#premierTableau')
 const fini = document.querySelectorAll('.remove')
 const change = document.querySelectorAll('.change')
 const toDo = document.querySelector('#toDo')
-const sections = document.querySelectorAll('section');
-const milieu = document.querySelector('.milieu');
-const taches = document.querySelectorAll('.task');
-const clear = document.querySelector('#clear');
+const sections = document.querySelectorAll('section')
+const milieu = document.querySelector('.milieu')
+const taches = document.querySelectorAll('.task')
+const clear = document.querySelector('#clear')
 let nombreTask = 0
 
-                                                                     //drag drop fix ?
+//fonction supprimer
 
-taches.forEach( tache =>{
-  tache.addEventListener('dragover', otherDragover);
-  tache.addEventListener('drop', otherDrop);
+function supprimer (aSupprimer) {
+  function animationSortie () {
+    let keyframes = {
+      opacity: [1, 0]
+    }
+    let options = {
+      duration: 800
+    }
+    aSupprimer.animate(keyframes, options)
+  }
+  animationSortie()
+  aSupprimer.classList.add('translate')
+  setTimeout(() => {
+    aSupprimer.remove()
+  }, 800)
+}
+
+sections.forEach(section => {
+  //drag/drop coté reception
+  section.addEventListener('dragenter', dragEnter)
+  section.addEventListener('dragover', dragOver)
+  section.addEventListener('dragleave', dragLeave)
+  section.addEventListener('drop', drop)
 })
 
-function otherDragover(e){
-  console.log('otherDragover')
-};
-
-
-
-function otherDrop(e){
-  console.log('test');
-  const id = e.dataTransfer.getData('text/plain');
-  const draggable = document.getElementById(id);
-  draggable.parentElement.appendChild(draggable);
-  draggable.classList.remove('hide');
+function dragEnter (e) {
+  e.preventDefault()
+  e.target.classList.add('drag-over')
+}
+function dragOver (e) {
+  e.preventDefault()
+  e.target.classList.add('drag-over')
+}
+function dragLeave (e) {
+  e.target.classList.remove('drag-over')
+}
+function drop (e) {
+  e.target.classList.remove('drag-over')
+  const id = e.dataTransfer.getData('text/plain')
+  const draggable = document.getElementById(id)
+  e.target.appendChild(draggable)
+  draggable.classList.remove('hide')
 }
 
-sections.forEach( section =>{                                       //drag/drop coté reception
-    section.addEventListener('dragenter', dragEnter);
-    section.addEventListener('dragover', dragOver);
-    section.addEventListener('dragleave', dragLeave);
-    section.addEventListener('drop', drop);
-})
-
-function dragEnter(e){
-    e.preventDefault();
-    e.target.classList.add('drag-over');
-}
-function dragOver(e){
-    e.preventDefault();
-    e.target.classList.add('drag-over');
-}
-function dragLeave(e){
-    e.target.classList.remove('drag-over');
-}
-function drop(e){
-    e.target.classList.remove('drag-over');
-    const id = e.dataTransfer.getData('text/plain');
-    const draggable = document.getElementById(id);
-    e.target.appendChild(draggable);
-    draggable.classList.remove('hide');
-}
-
-
-addThing.addEventListener('click', function (e) {           //creation d'une tâche
+addThing.addEventListener('click', function (e) {//creation d'une tâche
   e.preventDefault()
   if (toDo.value.length < 1) {
     alert('Veuillez entrer une valeur')
@@ -66,18 +64,18 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     nombreTask++
     let newTask = document.createElement('div')
     newTask.classList.add('task')
-    newTask.draggable = "true";
+    newTask.draggable = 'true'
     newTask.id = 'task' + nombreTask
     premierTableau.appendChild(newTask)
     let newP = document.createElement('p')
     newP.classList.add('newP')
     newTask.appendChild(newP)
     newP.textContent = toDo.value
-    let newDivForm = document.createElement('div');
-    newDivForm.classList.add('newDivForm');
-    newTask.appendChild(newDivForm);
+    let newDivForm = document.createElement('div')
+    newDivForm.classList.add('newDivForm')
+    newTask.appendChild(newDivForm)
     let newDivDiv = document.createElement('div')
-    newDivDiv.classList.add('divDiv');
+    newDivDiv.classList.add('divDiv')
     newTask.appendChild(newDivDiv)
     let newDivBtn = document.createElement('div')
     newDivDiv.appendChild(newDivBtn)
@@ -88,8 +86,8 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
     newBtnModify.classList.add('modify')
     newBtnModify.textContent = 'M'
     newDivBtn.appendChild(newBtnModify)
-    newBtnModify.addEventListener('click', function () {        //création de la fonction de modification
-      newDivForm.innerHTML = '';
+    newBtnModify.addEventListener('click', function () {   //création de la fonction de modification
+      newDivForm.innerHTML = ''
       newDivForm.classList.remove('newDivForm')
       let newForm = document.createElement('form')
       newForm.classList.add('newForm')
@@ -106,62 +104,55 @@ addThing.addEventListener('click', function (e) {           //creation d'une tâ
         newForm.remove()
       })
     })
-    let newBtnRmv = document.createElement('button')            //création de la fonction supprimer
+    let newBtnRmv = document.createElement('button') //création du bouton supprimer
     newBtnRmv.id = 'remove' + nombreTask
     newBtnRmv.classList.add('remove')
     newBtnRmv.textContent = 'X'
     newDivBtn.appendChild(newBtnRmv)
     newBtnRmv.addEventListener('click', function (e) {
-      function animationSortie(){
-        let keyframes = {
-          opacity: [1, 0]
+      supprimer(newTask)
+    })
+    let newBtnImp = document.createElement('button')
+    newBtnImp.id = 'important' + nombreTask
+    newBtnImp.textContent = 'I'
+    newBtnImp.classList.add('important')
+    newDivBtn2.appendChild(newBtnImp)
+    newDivBtn2.addEventListener('click', function (e) {      //changement de couleur
+      e.preventDefault()
+      if (
+        newDivBtn2.parentElement.parentElement.classList.contains('important')
+      ) {
+        newDivBtn2.parentElement.parentElement.classList.remove('important')
+      } else {
+        newDivBtn2.parentElement.parentElement.classList.add('important')
       }
-        let options = {
-          duration: 800,
-
-        }
-        newTask.animate(keyframes,options);
-      }
-      animationSortie();
-      newTask.classList.add('translate');
-      setTimeout( ()=>{
-
-        newBtnRmv.parentElement.parentElement.parentElement.remove()
-      }, 800);
     })
-    let newBtnImp = document.createElement('button');
-    newBtnImp.id = 'important' + nombreTask;
-    newBtnImp.textContent = 'I';
-    newBtnImp.classList.add('important');
-    newDivBtn2.appendChild(newBtnImp);
-    newDivBtn2.addEventListener('click', function(e){           //changement de couleur
-            e.preventDefault();
-            if (newDivBtn2.parentElement.parentElement.classList.contains('important')){
-                newDivBtn2.parentElement.parentElement.classList.remove('important');
-            }else{
-
-                newDivBtn2.parentElement.parentElement.classList.add('important');
-            }
+    newTask.addEventListener('dragstart', function (e) { //fonctiondrag/drop coté task
+      e.dataTransfer.setData('text/plain', e.target.id)
+      setTimeout(() => {
+        e.target.classList.add('hide')
+      }, 0)
     })
-    newTask.addEventListener('dragstart', function(e){          //fonctiondrag/drop coté task
-        e.dataTransfer.setData('text/plain',e.target.id);
-        setTimeout( () =>{
-            e.target.classList.add('hide');
-
-        }, 0);
-    })
-    newTask.addEventListener('dragend',function(e){
-      e.target.classList.remove('hide');
+    newTask.addEventListener('dragend', function (e) {
+      e.target.classList.remove('hide')
     })
   }
-  toDo.value ="";
+  toDo.value = ''
 })
 
+                                                                        //bouton clear all
+clear.addEventListener('click', function (e) {
+  const taches = document.querySelectorAll('#aValider .task')
+  for (let task of taches) {
+    supprimer(task)
+  }
+})
+clear.addEventListener('mouseover', function(e){
+  clear.classList.remove('important');
+  clear.classList.add('hover');
+})
 
-                                                              //bouton clear all
-clear.addEventListener('click',function(e){
-    const taches = document.querySelectorAll('#aValider .task');
-    for(let task of taches){
-      task.remove();
-    }
+clear.addEventListener('mouseout', function(e){
+  clear.classList.remove('hover');
+  clear.classList.add('important');
 })
